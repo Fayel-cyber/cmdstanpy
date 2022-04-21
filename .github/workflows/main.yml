@@ -67,6 +67,12 @@ jobs:
         
       - name: Show libraries
         run: python -m pip freeze
+      
+      - name: CmdStan installation cacheing
+        uses: actions/cache@v2
+        with:
+          path: ~/.cmdstan
+          key: ${{ runner.os }}-${{ steps.system-info.outputs.release }}-cmdstan-${{ needs.get-cmdstan-version.outputs.version }}-${{ hashFiles('**/install_cmdstan.py') }} 
           
       - name: Run tests
         run: |
