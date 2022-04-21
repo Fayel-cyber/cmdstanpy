@@ -64,9 +64,7 @@ jobs:
       - name: Install wheel (Linux, macOS)
         if: matrix.os != 'windows-latest'
         run: pip install dist/*.whl
-        
-      - name: Show libraries
-        run: python -m pip freeze
+
       
       - name: CmdStan installation cacheing
         uses: actions/cache@v2
