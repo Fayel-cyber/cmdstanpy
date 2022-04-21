@@ -65,18 +65,7 @@ jobs:
         if: matrix.os != 'windows-latest'
         run: pip install dist/*.whl
         
-      #- name: CmdStan installation cacheing
-        uses: actions/cache@v2
-        with:
-          path: ~/.cmdstan
-          key: ${{ runner.os }}-${{ steps.system-info.outputs.release }}-cmdstan-${{ needs.get-cmdstan-version.outputs.version }}-${{ hashFiles('**/install_cmdstan.py') }} 
-      
-      #- name: Install CmdStan (Linux, macOS)
-        #if: matrix.os != 'windows-latest'
-        run: |
-          install_cmdstan -h
-          install_cxx_toolchain -h
-          python -m cmdstanpy.install_cmdstan --version ${{ needs.get-cmdstan-version.outputs.version }}
+     
           
       - name: Run tests
         run: |
