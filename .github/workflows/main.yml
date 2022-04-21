@@ -65,7 +65,8 @@ jobs:
         if: matrix.os != 'windows-latest'
         run: pip install dist/*.whl
         
-     
+      - name: Show libraries
+        run: python -m pip freeze
           
       - name: Run tests
         run: |
