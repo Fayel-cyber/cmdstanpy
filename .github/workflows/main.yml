@@ -58,14 +58,21 @@ jobs:
           pip install -r requirements-test.txt
           pip install codecov
 
-      - name: CmdStan installation cacheing
+      - name: Build wheel
+        run: python setup.py bdist_wheel
+        
+      - name: Install wheel (Linux, macOS)
+        if: matrix.os != 'windows-latest'
+        run: pip install dist/*.whl
+        
+      #- name: CmdStan installation cacheing
         uses: actions/cache@v2
         with:
           path: ~/.cmdstan
           key: ${{ runner.os }}-${{ steps.system-info.outputs.release }}-cmdstan-${{ needs.get-cmdstan-version.outputs.version }}-${{ hashFiles('**/install_cmdstan.py') }} 
       
-      - name: Install CmdStan (Linux, macOS)
-        if: matrix.os != 'windows-latest'
+      #- name: Install CmdStan (Linux, macOS)
+        #if: matrix.os != 'windows-latest'
         run: |
           install_cmdstan -h
           install_cxx_toolchain -h
