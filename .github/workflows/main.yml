@@ -58,6 +58,12 @@ jobs:
           pip install -r requirements-test.txt
           pip install codecov
 
+      - name: CmdStan installation cacheing
+        uses: actions/cache@v2
+        with:
+          path: ~/.cmdstan
+          key: ${{ runner.os }}-${{ steps.system-info.outputs.release }}-cmdstan-${{ needs.get-cmdstan-version.outputs.version }}-${{ hashFiles('**/install_cmdstan.py') }} 
+      
       - name: Install CmdStan (Linux, macOS)
         if: matrix.os != 'windows-latest'
         run: |
