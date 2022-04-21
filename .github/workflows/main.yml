@@ -58,6 +58,13 @@ jobs:
           pip install -r requirements-test.txt
           pip install codecov
 
+      - name: Install CmdStan (Linux, macOS)
+        if: matrix.os != 'windows-latest'
+        run: |
+          install_cmdstan -h
+          install_cxx_toolchain -h
+          python -m cmdstanpy.install_cmdstan --version ${{ needs.get-cmdstan-version.outputs.version }}
+          
       - name: Run tests
         run: |
           mkdir run_tests
